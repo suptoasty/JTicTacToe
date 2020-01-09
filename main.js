@@ -165,6 +165,8 @@ class Game {
         if(this.player.symbol == "X") this.player2.symbol = "O";
         else this.player2.symbol = "X";
         
+        this.board.printBoard(); //print blank board
+
         let quit = false; //checks when to quit
         try {
             while(!quit) {
