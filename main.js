@@ -131,10 +131,13 @@ class Game {
         this.board.clearBoard();
         this.player.name = await prompt("What is your name? ");
         this.player.symbol = await prompt(this.player.name+' which symbol would you like to use (X / O): ');
-        console.log(this.player.symbol);
+        while(true) {
+            this.player.symbol = await prompt(this.player.name+" please enter either (X / O): ");
+            if(this.player.symbol == "X" || this.player.symbol == "O") break;
+        }
 
-        let twoPlayer = !isStringBool(await prompt("Are you playing alone? (Y / N): "));
-        if(twoPlayer) {
+        this.twoPlayer = !isStringBool(await prompt("Are you playing alone? (Y / N): "));
+        if(this.twoPlayer) {
             this.player2.name = await prompt("What is the other players name? ");
         }
         if(this.player.symbol == "X") this.player2.symbol = "O";
