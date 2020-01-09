@@ -7,7 +7,6 @@ class Board {
     constructor() {
         this.board = this.createBoard();
         this.clearBoard();
-        this.printBoard();
     }
 
     createBoard() {
@@ -21,7 +20,7 @@ class Board {
     clearBoard() {
         for(let i = 0; i < 3; i++) {
             for(let n = 0; n < 3; n++) {
-                this.board[i][n] == 0;
+                this.board[i][n] = 0;
             }
         }
     }
@@ -105,8 +104,7 @@ class Game {
     async aiMakeMove(player) {
         console.log("It is now the AI's turn! ");
         let move = await this.board.getFreeSpace()
-        console.log(move);
-        // this.board.makeMove(player.getSymbolAsInt(), move[0], move[1]);
+        this.board.makeMove(player.getSymbolAsInt(), move[0], move[1]);
     }
 
     async playerMakeMove(player) {
@@ -122,10 +120,10 @@ class Game {
             console.log(player.name+" is the winner! ");
             return true;
         }
-        // if(this.board.isEnd()) {
-        //     console.log("Tied Game! ");
-        //     return true;
-        // }
+        if(this.board.isEnd()) {
+            console.log("Tied Game! ");
+            return true;
+        }
         return false;
     }
 
@@ -152,6 +150,7 @@ class Game {
 
                 if(this.twoPlayer) await this.playerMakeMove(this.player2);
                 else await this.aiMakeMove(this.player2);
+                this.board.printBoard();
                 quit = this.isEndGame(this.player2);
                 if(quit) break;
             }
@@ -167,7 +166,6 @@ function isStringBool(str) {
     str = str.toLowerCase();
     return String(true) == str || str == 'y' || str == 'yes';
 }
-
 
 async function prompt(question) {
     return new Promise((resolve, reject) => {
